@@ -1,0 +1,3925 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-commerce Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list of all categories",
+                "description": "Returns list of all categories",
+                "operationId": "Get all categories",
+                "responses": {
+                    "200": {
+                        "description": "All categories"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/category/add": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create new Category",
+                "description": "Add new Category",
+                "operationId": "create new Category",
+                "requestBody": {
+                    "description": "Enter Category data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "Electronic"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "parent_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/category/show": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "show specific category",
+                "description": "show specific category",
+                "operationId": "show specific category",
+                "parameters": [
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Enter category id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "category details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                }
+            }
+        },
+        "/api/category/update": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update Category",
+                "description": "Edit Category",
+                "operationId": "update Category",
+                "requestBody": {
+                    "description": "Enter Category data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "category_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "category_id",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "Electronic"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "parent_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/category/delete": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Soft delete category",
+                "description": "Soft delete category",
+                "operationId": "delete specific category",
+                "requestBody": {
+                    "description": "Pass category data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "category_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "category deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/category/restore": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Restore delete category",
+                "description": "Restore category",
+                "operationId": "restore specific category",
+                "requestBody": {
+                    "description": "Pass category data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "category_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "category restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/Job-types": {
+            "get": {
+                "tags": [
+                    "JobTypes"
+                ],
+                "summary": "Get list of all JobTypes",
+                "description": "Returns list of all JobTypes",
+                "operationId": "Get all JobTypes",
+                "responses": {
+                    "200": {
+                        "description": "All JobTypes"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/Job-types/create": {
+            "post": {
+                "tags": [
+                    "JobTypes"
+                ],
+                "summary": "Create new JobType",
+                "description": "Add new JobType",
+                "operationId": "create new JobType",
+                "requestBody": {
+                    "description": "Enter JobType data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "Software developer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JobType created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/Job-types/show": {
+            "get": {
+                "tags": [
+                    "JobTypes"
+                ],
+                "summary": "show specific JobType",
+                "description": "show specific JobType",
+                "operationId": "show specific JobType",
+                "parameters": [
+                    {
+                        "name": "JobType_id",
+                        "in": "query",
+                        "description": "Enter JobType id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "JobType details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/Job-types/update": {
+            "post": {
+                "tags": [
+                    "JobTypes"
+                ],
+                "summary": "Update JobType",
+                "description": "Edit JobType",
+                "operationId": "update JobType",
+                "requestBody": {
+                    "description": "Enter JobType data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "JobType_id",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "JobType_id": {
+                                        "type": "integer",
+                                        "format": "JobType_id",
+                                        "example": "1"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "Software developer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JobType updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/Job-types/delete": {
+            "post": {
+                "tags": [
+                    "JobTypes"
+                ],
+                "summary": "Soft delete JobType",
+                "description": "Soft delete JobType",
+                "operationId": "delete specific JobType",
+                "requestBody": {
+                    "description": "Pass JobType data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "JobType_id"
+                                ],
+                                "properties": {
+                                    "JobType_id": {
+                                        "type": "integer",
+                                        "format": "JobType_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JobType deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/Job-types/restore": {
+            "post": {
+                "tags": [
+                    "JobTypes"
+                ],
+                "summary": "Restore delete JobType",
+                "description": "Restore JobType",
+                "operationId": "restore specific JobType",
+                "requestBody": {
+                    "description": "Pass JobType data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "JobType_id"
+                                ],
+                                "properties": {
+                                    "JobType_id": {
+                                        "type": "integer",
+                                        "format": "JobType_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JobType restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Get list of all jobs",
+                "description": "Returns list of all jobs",
+                "operationId": "Get all jobs",
+                "responses": {
+                    "200": {
+                        "description": "All Jobs"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/search": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "show filtered job",
+                "description": "show filtered job",
+                "operationId": "show filtered jobs",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "description": "Enter city name",
+                        "required": false
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Enter category name",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Jobs filtered"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                }
+            }
+        },
+        "/api/jobs/show": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "show specific job",
+                "description": "show specific job",
+                "operationId": "show specific job",
+                "parameters": [
+                    {
+                        "name": "job_id",
+                        "in": "query",
+                        "description": "Enter job id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                }
+            }
+        },
+        "/api/jobs/create": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Create new job",
+                "description": "Add new job",
+                "operationId": "create new job",
+                "requestBody": {
+                    "description": "Pass job credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "salary_range",
+                                    "requirements",
+                                    "description",
+                                    "years_of_experience",
+                                    "category_id",
+                                    "company_id",
+                                    "location_id",
+                                    "job_type_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "job"
+                                    },
+                                    "salary_range": {
+                                        "type": "string",
+                                        "format": "salary_range",
+                                        "example": "1000 L.E - 2000 L.E"
+                                    },
+                                    "requirements": {
+                                        "type": "string",
+                                        "format": "requirements",
+                                        "example": "job requirements"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "description",
+                                        "example": "job description"
+                                    },
+                                    "years_of_experience": {
+                                        "type": "string",
+                                        "format": "years_of_experience",
+                                        "example": "2"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "category_id",
+                                        "example": "1"
+                                    },
+                                    "company_id": {
+                                        "type": "integer",
+                                        "format": "company_id",
+                                        "example": "1"
+                                    },
+                                    "location_id": {
+                                        "type": "integer",
+                                        "format": "location_id",
+                                        "example": "1"
+                                    },
+                                    "job_type_id": {
+                                        "type": "integer",
+                                        "format": "job_type_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/update": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Update job",
+                "description": "Edit job",
+                "operationId": "update job",
+                "requestBody": {
+                    "description": "Pass job credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_id",
+                                    "title",
+                                    "salary_range",
+                                    "requirements",
+                                    "description",
+                                    "years_of_experience",
+                                    "category_id",
+                                    "company_id",
+                                    "location_id",
+                                    "job_type_id"
+                                ],
+                                "properties": {
+                                    "job_id": {
+                                        "type": "integer",
+                                        "format": "job_id",
+                                        "example": "1"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "job"
+                                    },
+                                    "salary_range": {
+                                        "type": "string",
+                                        "format": "salary_range",
+                                        "example": "1000 L.E - 2000 L.E"
+                                    },
+                                    "requirements": {
+                                        "type": "string",
+                                        "format": "requirements",
+                                        "example": "job requirements"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "description",
+                                        "example": "job description"
+                                    },
+                                    "years_of_experience": {
+                                        "type": "integer",
+                                        "format": "years_of_experience",
+                                        "example": "2"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "category_id",
+                                        "example": "1"
+                                    },
+                                    "company_id": {
+                                        "type": "integer",
+                                        "format": "company_id",
+                                        "example": "1"
+                                    },
+                                    "location_id": {
+                                        "type": "integer",
+                                        "format": "location_id",
+                                        "example": "1"
+                                    },
+                                    "job_type_id": {
+                                        "type": "integer",
+                                        "format": "job_type_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/delete": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Soft delete job",
+                "description": "Soft delete job",
+                "operationId": "delete specific job",
+                "requestBody": {
+                    "description": "Pass job credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_id"
+                                ],
+                                "properties": {
+                                    "job_id": {
+                                        "type": "integer",
+                                        "format": "job_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/restore": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Restore delete job",
+                "description": "Restore job",
+                "operationId": "restore specific job",
+                "requestBody": {
+                    "description": "Pass job credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_id"
+                                ],
+                                "properties": {
+                                    "job_id": {
+                                        "type": "integer",
+                                        "format": "job_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/apply": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Get list of user jobs",
+                "description": "Returns list of user jobs",
+                "operationId": "Get user jobs",
+                "responses": {
+                    "200": {
+                        "description": "All User Jobs"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "apply new job",
+                "description": "Apply new job",
+                "operationId": "apply new job",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/item"
+                                    },
+                                    {
+                                        "required": [
+                                            "job_id"
+                                        ],
+                                        "properties": {
+                                            "job_id": {
+                                                "type": "integer",
+                                                "format": "job_id",
+                                                "example": "1"
+                                            },
+                                            "resume": {
+                                                "description": "resume",
+                                                "type": "string",
+                                                "format": "binary"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job applied successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/companies/approve": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Approve company job",
+                "description": "Approve company job",
+                "operationId": "Approve company job",
+                "requestBody": {
+                    "description": "Pass approve company job credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_id",
+                                    "is_published"
+                                ],
+                                "properties": {
+                                    "job_id": {
+                                        "type": "string",
+                                        "format": "job_id",
+                                        "example": "1"
+                                    },
+                                    "is_published": {
+                                        "type": "string",
+                                        "format": "is_published",
+                                        "example": "accepted"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company Job updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/users/approve": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Approve user job",
+                "description": "Approve user job",
+                "operationId": "Approve user Job",
+                "requestBody": {
+                    "description": "Pass approve user job credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_id",
+                                    "user_id",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "job_id": {
+                                        "type": "string",
+                                        "format": "job_id",
+                                        "example": "1"
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "user_id",
+                                        "example": "1"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "format": "status",
+                                        "example": "accepted"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Job updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/locations": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get list of all locations",
+                "description": "Returns list of all locations",
+                "operationId": "Get all locations",
+                "responses": {
+                    "200": {
+                        "description": "All Locations"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/locations/create": {
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Create new location",
+                "description": "Add new location",
+                "operationId": "create new location",
+                "requestBody": {
+                    "description": "Enter location data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "country",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "country": {
+                                        "type": "string",
+                                        "format": "country",
+                                        "example": "Egypt"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "format": "city",
+                                        "example": "Cairo"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Location created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Errors"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/location/show": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "show specific location",
+                "description": "show specific location",
+                "operationId": "show specific location",
+                "parameters": [
+                    {
+                        "name": "location_id",
+                        "in": "query",
+                        "description": "Enter location id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Location details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/update": {
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update location",
+                "description": "Edit location",
+                "operationId": "update location",
+                "requestBody": {
+                    "description": "Enter location data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "location_id",
+                                    "country",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "location_id": {
+                                        "type": "integer",
+                                        "format": "location_id",
+                                        "example": "1"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "format": "country",
+                                        "example": "Egypt"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "format": "city",
+                                        "example": "Cairo"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Location updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Errors"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/delete": {
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Soft delete location",
+                "description": "Soft delete location",
+                "operationId": "delete specific location",
+                "requestBody": {
+                    "description": "Pass location data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "location_id"
+                                ],
+                                "properties": {
+                                    "location_id": {
+                                        "type": "integer",
+                                        "format": "location_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Location deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/restore": {
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Restore delete location",
+                "description": "Restore location",
+                "operationId": "restore specific location",
+                "requestBody": {
+                    "description": "Pass location data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "location_id"
+                                ],
+                                "properties": {
+                                    "location_id": {
+                                        "type": "integer",
+                                        "format": "location_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "location restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Get list of permissions",
+                "description": "Returns list of permissions",
+                "operationId": "get permissions list",
+                "responses": {
+                    "200": {
+                        "description": "All Permissions"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions/show": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "show specific permission",
+                "description": "show specific permission",
+                "operationId": "show specific permission",
+                "parameters": [
+                    {
+                        "name": "permission_id",
+                        "in": "query",
+                        "description": "Enter permission id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permission details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions/add": {
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Add new permission",
+                "description": "create new permission",
+                "operationId": "dda32bb1f948a673462ab46a2166053d",
+                "requestBody": {
+                    "description": "Enter permission title",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions/edit": {
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Edit specific permission",
+                "description": "Edit permission",
+                "operationId": "Edit specific permission",
+                "requestBody": {
+                    "description": "Enter Permissions Id & title",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "permission_id": {
+                                        "type": "integer",
+                                        "format": "permission_id",
+                                        "example": "1"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "create"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Permission Edited successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions/delete": {
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "delete specific permission",
+                "description": "delete Permission",
+                "operationId": "delete specific permission",
+                "requestBody": {
+                    "description": "Enter Permissions Id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id"
+                                ],
+                                "properties": {
+                                    "permission_id": {
+                                        "type": "integer",
+                                        "format": "permission_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Permission deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/permissions/restore": {
+            "post": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Restore delete permission",
+                "description": "Restore permission",
+                "operationId": "restore specific permission",
+                "requestBody": {
+                    "description": "Pass permission id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id"
+                                ],
+                                "properties": {
+                                    "permission_id": {
+                                        "type": "integer",
+                                        "format": "permission_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Permission restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get list of all roles",
+                "description": "Returns list of all roles",
+                "operationId": "Get all roles",
+                "responses": {
+                    "200": {
+                        "description": "All roles"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/show": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "show specific role",
+                "description": "show specific role",
+                "operationId": "show specific role",
+                "parameters": [
+                    {
+                        "name": "role_id",
+                        "in": "query",
+                        "description": "Enter role id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/add": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Create New role",
+                "description": "Add New role",
+                "operationId": "create new role",
+                "requestBody": {
+                    "description": "Pass role credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "permissions"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "role"
+                                    },
+                                    "permissions": {
+                                        "type": "integer",
+                                        "format": "permissions",
+                                        "example": "[1, 2]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validations Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/update": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Update role",
+                "description": "Edit role",
+                "operationId": "update role",
+                "requestBody": {
+                    "description": "Pass role credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "permissions",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "role"
+                                    },
+                                    "permissions": {
+                                        "type": "integer",
+                                        "format": "permissions",
+                                        "example": "[1, 2]"
+                                    },
+                                    "role_id": {
+                                        "type": "integer",
+                                        "format": "role_id",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validations Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/delete": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Soft Delete role",
+                "description": "Soft delete role",
+                "operationId": "delete specific role",
+                "requestBody": {
+                    "description": "Pass role credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "role_id": {
+                                        "type": "integer",
+                                        "format": "role_id",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/restore": {
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Restore delete role",
+                "description": "restore role",
+                "operationId": "restore specific role",
+                "requestBody": {
+                    "description": "Pass role credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "role_id": {
+                                        "type": "integer",
+                                        "format": "role_id",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admins": {
+            "get": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Get list of Admins",
+                "description": "Returns list of Admins",
+                "operationId": "get All Admins",
+                "responses": {
+                    "200": {
+                        "description": "All Admins"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admins/show": {
+            "get": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "show specific admin",
+                "description": "show specific admin",
+                "operationId": "show specific admin",
+                "parameters": [
+                    {
+                        "name": "admin_id",
+                        "in": "query",
+                        "description": "Enter admin id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admins/create": {
+            "post": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Create Admin",
+                "description": "Add new Admin",
+                "operationId": "create Admin",
+                "requestBody": {
+                    "description": "Pass admin data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Ahmed"
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "example": "test@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "password",
+                                        "example": "123@test"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Admin created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admins/edit": {
+            "post": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Edit specific admin",
+                "description": "Edit admin",
+                "operationId": "Edit specific admin",
+                "requestBody": {
+                    "description": "Enter admin data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "admin_id",
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "admin_id": {
+                                        "type": "integer",
+                                        "format": "admin_id",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "Ahmed"
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "format": "email",
+                                        "example": "test@gmail.com"
+                                    },
+                                    "old_password": {
+                                        "type": "string",
+                                        "format": "old_password",
+                                        "example": "12345678"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "format": "new_password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Admin updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Errors"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admins/delete": {
+            "post": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Delete Admin",
+                "description": "Delete Admin",
+                "operationId": "Delete Admin",
+                "requestBody": {
+                    "description": "Pass admin data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "admin_id"
+                                ],
+                                "properties": {
+                                    "admin_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Admin detaiels"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admins/restore": {
+            "post": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Restore Delete Admin",
+                "description": "restore admin",
+                "operationId": "restore specific admin",
+                "requestBody": {
+                    "description": "Pass admin credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "admin_id"
+                                ],
+                                "properties": {
+                                    "admin_id": {
+                                        "type": "integer",
+                                        "format": "admin_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Admin restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/companies": {
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Get list of companies",
+                "description": "Returns list of companies",
+                "operationId": "Get All Companies",
+                "responses": {
+                    "200": {
+                        "description": "All companies"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/companies/show": {
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "show specific company",
+                "description": "show specific company",
+                "operationId": "show specific company",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "description": "Enter company id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/api/companies/create": {
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Create New Company",
+                "description": "Add New Company",
+                "operationId": "create new company",
+                "requestBody": {
+                    "description": "Pass companies credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "comapny"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "comapny@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/companies/edit": {
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Update company",
+                "description": "Edit company",
+                "operationId": "update company",
+                "requestBody": {
+                    "description": "Pass company credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "comapny"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "comapny@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company update successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/companies/delete": {
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Soft delete company",
+                "description": "Soft delete company",
+                "operationId": "delete specific company",
+                "requestBody": {
+                    "description": "Pass role credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "company_id"
+                                ],
+                                "properties": {
+                                    "company_id": {
+                                        "type": "integer",
+                                        "format": "company_id",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/companies/restore": {
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Restore delete comapny",
+                "description": "restore comapny",
+                "operationId": "restore specific company",
+                "requestBody": {
+                    "description": "Pass comapny credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "comapny_id"
+                                ],
+                                "properties": {
+                                    "comapny_id": {
+                                        "type": "integer",
+                                        "format": "comapny_id",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/companies/details": {
+            "get": {
+                "tags": [
+                    "Company Details"
+                ],
+                "summary": "show specific company details",
+                "description": "show specific company details",
+                "operationId": "show specific company details",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "description": "Enter company id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                }
+            }
+        },
+        "/api/companies/details/create-or-update": {
+            "post": {
+                "tags": [
+                    "Company Details"
+                ],
+                "summary": "Create Or Update your company details",
+                "description": "Add Or Edit your company details",
+                "operationId": "create or update company detail",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/item"
+                                    },
+                                    {
+                                        "required": [
+                                            "gender",
+                                            "marital_status",
+                                            "millitary_status",
+                                            "nationality"
+                                        ],
+                                        "properties": {
+                                            "gender": {
+                                                "type": "string",
+                                                "format": "gender",
+                                                "example": "male"
+                                            },
+                                            "nationality": {
+                                                "type": "string",
+                                                "format": "nationality",
+                                                "example": "egyption"
+                                            },
+                                            "marital_status": {
+                                                "type": "string",
+                                                "format": "marital_status",
+                                                "example": "single"
+                                            },
+                                            "military_status": {
+                                                "type": "string",
+                                                "format": "military_status",
+                                                "example": "exemption"
+                                            },
+                                            "resume": {
+                                                "description": "resume",
+                                                "type": "string",
+                                                "format": "binary"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "detail created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Errors"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/educations": {
+            "get": {
+                "tags": [
+                    "User Educations"
+                ],
+                "summary": "Get user educations",
+                "description": "Returns user educations",
+                "operationId": "get user educations",
+                "responses": {
+                    "200": {
+                        "description": "user educations"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/educations/create": {
+            "post": {
+                "tags": [
+                    "User Educations"
+                ],
+                "summary": "Create new educations",
+                "description": "Add new educations",
+                "operationId": "create new educations",
+                "requestBody": {
+                    "description": "Pass educations credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "start_date",
+                                    "end_date",
+                                    "university"
+                                ],
+                                "properties": {
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "start_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "end_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "university": {
+                                        "type": "string",
+                                        "format": "university",
+                                        "example": "ASU"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Educations created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/educations/update": {
+            "post": {
+                "tags": [
+                    "User Educations"
+                ],
+                "summary": "update new educations",
+                "description": "Add new educations",
+                "operationId": "update new educations",
+                "requestBody": {
+                    "description": "Pass educations credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "start_date",
+                                    "end_date",
+                                    "university",
+                                    "education_id"
+                                ],
+                                "properties": {
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "start_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "end_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "education_id": {
+                                        "type": "string",
+                                        "format": "education_id",
+                                        "example": "1"
+                                    },
+                                    "university": {
+                                        "type": "string",
+                                        "format": "university",
+                                        "example": "EUC"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "educations updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/educations/delete": {
+            "post": {
+                "tags": [
+                    "User Educations"
+                ],
+                "summary": "Soft delete education",
+                "description": "Soft delete education",
+                "operationId": "delete specific education",
+                "requestBody": {
+                    "description": "Pass education credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "education_id"
+                                ],
+                                "properties": {
+                                    "education_id": {
+                                        "type": "integer",
+                                        "format": "education_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Education deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/experiences": {
+            "get": {
+                "tags": [
+                    "User Experiences"
+                ],
+                "summary": "Get user experiences",
+                "description": "Returns user experiences",
+                "operationId": "get user experiences",
+                "responses": {
+                    "200": {
+                        "description": "User experiences"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/experiences/create": {
+            "post": {
+                "tags": [
+                    "User Experiences"
+                ],
+                "summary": "Create new experience",
+                "description": "Add new experience",
+                "operationId": "create new experience",
+                "requestBody": {
+                    "description": "Pass experience credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "start_date",
+                                    "end_date",
+                                    "title",
+                                    "description",
+                                    "company_name"
+                                ],
+                                "properties": {
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "start_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "end_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "test"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "description",
+                                        "example": "this is description"
+                                    },
+                                    "company_name": {
+                                        "type": "string",
+                                        "format": "company_name",
+                                        "example": "Vodafone"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Experience created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/experiences/update": {
+            "post": {
+                "tags": [
+                    "User Experiences"
+                ],
+                "summary": "update new experience",
+                "description": "Add new experience",
+                "operationId": "update new experience",
+                "requestBody": {
+                    "description": "Pass experience credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "start_date",
+                                    "end_date",
+                                    "title",
+                                    "description",
+                                    "company_name",
+                                    "experience_id"
+                                ],
+                                "properties": {
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "start_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "end_date",
+                                        "example": "1-1-2001"
+                                    },
+                                    "experience_id": {
+                                        "type": "string",
+                                        "format": "experience_id",
+                                        "example": "1"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "title",
+                                        "example": "test"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "description",
+                                        "example": "this is description"
+                                    },
+                                    "company_name": {
+                                        "type": "string",
+                                        "format": "company_name",
+                                        "example": "Vodafone"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Experience updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/experiences/delete": {
+            "post": {
+                "tags": [
+                    "User Experiences"
+                ],
+                "summary": "Soft delete experience",
+                "description": "Soft delete experience",
+                "operationId": "delete specific experience",
+                "requestBody": {
+                    "description": "Pass experince credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "experince_id"
+                                ],
+                                "properties": {
+                                    "experience_id": {
+                                        "type": "integer",
+                                        "format": "experience_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "experience deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/skills": {
+            "get": {
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "Get list of skills",
+                "description": "Returns list of skills",
+                "operationId": "get skills list",
+                "responses": {
+                    "200": {
+                        "description": "All skills"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/skills/create": {
+            "post": {
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "Create new skill",
+                "description": "Add new skill",
+                "operationId": "create new skill",
+                "requestBody": {
+                    "description": "Pass skill credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "years_of_experience",
+                                    "justification"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "skill"
+                                    },
+                                    "years_of_experience": {
+                                        "type": "string",
+                                        "format": "years_of_experience",
+                                        "example": "1-3 years"
+                                    },
+                                    "justification": {
+                                        "type": "string",
+                                        "format": "justification",
+                                        "example": "test"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "skill created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/skills/update": {
+            "post": {
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "Update skill",
+                "description": "Edit skill",
+                "operationId": "update skill",
+                "requestBody": {
+                    "description": "Pass skill credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "skill_id",
+                                    "name",
+                                    "years_of_experinces",
+                                    "justification"
+                                ],
+                                "properties": {
+                                    "skill_id": {
+                                        "type": "integer",
+                                        "format": "skill_id",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "skill"
+                                    },
+                                    "years_of_experience": {
+                                        "type": "string",
+                                        "format": "years_of_experience",
+                                        "example": "1-3 years"
+                                    },
+                                    "justification": {
+                                        "type": "string",
+                                        "format": "justification",
+                                        "example": "test"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "skill updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/skills/delete": {
+            "post": {
+                "tags": [
+                    "Skills"
+                ],
+                "summary": "Soft delete skill",
+                "description": "Soft delete skill",
+                "operationId": "delete specific skill",
+                "requestBody": {
+                    "description": "Pass skill credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "skill_id"
+                                ],
+                                "properties": {
+                                    "skill_id": {
+                                        "type": "integer",
+                                        "format": "skill_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "skill deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "register",
+                "description": "register by name , email and password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Fill your Data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "User"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign in",
+                "description": "Login by email and password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    },
+                                    "persistent": {
+                                        "type": "boolean",
+                                        "example": "true"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout",
+                "description": "Logout by email, password",
+                "operationId": "authLogout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/update-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Update password",
+                "description": "Update password",
+                "operationId": "update password",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "old_password",
+                                    "new_password"
+                                ],
+                                "properties": {
+                                    "old_password": {
+                                        "type": "string",
+                                        "format": "old_password",
+                                        "example": "12345678"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "format": "new_password",
+                                        "example": "123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password update successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get list of users",
+                "description": "Returns list of users",
+                "operationId": "get all users",
+                "responses": {
+                    "200": {
+                        "description": "All users"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/show": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "show specific user",
+                "description": "show specific user",
+                "operationId": "show specific User",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Enter User id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/edit": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user",
+                "description": "Edit user",
+                "operationId": "update user",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "user"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User update successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/delete": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Soft delete user",
+                "description": "Soft delete user",
+                "operationId": "delete specific user",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "format": "user_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/restore": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Restore delete user",
+                "description": "restore user",
+                "operationId": "restore specific user",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "format": "user_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User restored successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/details": {
+            "get": {
+                "tags": [
+                    "User Details"
+                ],
+                "summary": "Get user details",
+                "description": "Returns user details",
+                "operationId": "get user details",
+                "responses": {
+                    "200": {
+                        "description": "user details"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/details/create-or-update": {
+            "post": {
+                "tags": [
+                    "User Details"
+                ],
+                "summary": "Create Or Update your details",
+                "description": "Add your User details",
+                "operationId": "create or update detail",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/item"
+                                    },
+                                    {
+                                        "required": [
+                                            "gender",
+                                            "marital_status",
+                                            "millitary_status",
+                                            "nationality"
+                                        ],
+                                        "properties": {
+                                            "gender": {
+                                                "type": "string",
+                                                "format": "gender",
+                                                "example": "male"
+                                            },
+                                            "nationality": {
+                                                "type": "string",
+                                                "format": "nationality",
+                                                "example": "egyption"
+                                            },
+                                            "marital_status": {
+                                                "type": "string",
+                                                "format": "marital_status",
+                                                "example": "single"
+                                            },
+                                            "military_status": {
+                                                "type": "string",
+                                                "format": "military_status",
+                                                "example": "exemption"
+                                            },
+                                            "resume": {
+                                                "description": "resume",
+                                                "type": "string",
+                                                "format": "binary"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "detail created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Validation Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "required": [
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "email": {
+                        "description": "User unique email address",
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": "true",
+                        "example": "user@gmail.com"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Laravel Sanctum token authentication",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
