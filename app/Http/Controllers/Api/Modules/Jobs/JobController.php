@@ -100,9 +100,13 @@ class JobController extends Controller
         $jobLocations = Location::where('city', 'like', "%".request('city')."%")->first();
         $jobCategories = Category::where('name', 'like', "%".request('category')."%")->first();
 
+//        dd($jobLocations);
+//        dd($jobCategories->id);
+
         $jobs = Job::where('category_id', $jobCategories ? $jobCategories->id : NULL)
             ->Where('location_id', $jobLocations ? $jobLocations->id : NULL)->paginate(10);
-        return $this->apiResponse(200,'Filtered Jobs',null, JobResource::collection($jobs));
+//        dd($jobs);
+        return $this->apiResponse(200,'Filtered Jobs',null, $jobs);
     }
 
     /**
@@ -308,7 +312,7 @@ class JobController extends Controller
             return $this->ApiResponse(401,'Unauthorized');
         }
 
-        $job = Job::find($request->role_id);
+        $job = Job::find($request->job_id);
         if (is_null($job)) {
             return $this->ApiResponse(400, 'Job already deleted');
         }
@@ -358,7 +362,10 @@ class JobController extends Controller
         }
 
         $user = auth('sanctum')->user();
-        $companyExists = Job::where([['id', $request->job_id], ['company_id', $user->id]])->first();
+//        dd($user);
+        $companyExists = Job::withTrashed()->where([['id', $request->job_id], ['company_id', $user->id]])->first();
+//        $companyExists = Job::where([['id', $request->job_id]])->first();
+//        dd($companyExists);
         if (is_null($companyExists)) {
             return $this->ApiResponse(401,'Unauthorized');
         }

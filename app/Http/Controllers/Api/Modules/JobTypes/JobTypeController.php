@@ -86,8 +86,8 @@ class JobTypeController extends Controller
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        JobType::create(['title' => $request->title]);
-        return $this->ApiResponse(200,'JobType created successfully');
+         $jobType = JobType::create(['title' => $request->title]);
+        return $this->ApiResponse(200,'JobType created successfully', null, $jobType);
     }
 
     /**
@@ -169,14 +169,17 @@ class JobTypeController extends Controller
     public function updateJobType(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'JobType_id'  => 'required|exists:Job_Types,id',
+            'JobType_id'  => 'required|exists:job_types,id',
             'title'       => 'required'
         ]);
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        JobType::find($request->JobType_id)->update(['title'  => $request->title]);
-        return $this->ApiResponse(200,'JobType updated successfully');
+        $jobType = JobType::find($request->JobType_id);
+//        $jobType = JobType::where(['id', $request->JobType_id]);
+//        dd($jobType);
+        $jobType->update(['title'  => $request->title]);
+        return $this->ApiResponse(200,'JobType updated successfully', null, $jobType);
     }
 
     /**
@@ -215,12 +218,15 @@ class JobTypeController extends Controller
      */
     public function softDeleteJobType(Request $request)
     {
-        $validation = Validator::make($request->all(), ['JobType_id' => 'required|exists:Job_Types,id']);
+        $validation = Validator::make($request->all(), ['jobType_id' => 'required|exists:job_types,id']);
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        $JobType = jobType::find($request->JobType_id);
-        if (is_null($JobType)) {
+//        dd('dd');
+        $jobType = jobType::find($request->jobType_id);
+//        dd('cc');
+        dd($jobType);
+        if (is_null($jobType)) {
             return $this->ApiResponse(400, 'JobType already deleted');
         }
         $JobType->delete();
@@ -263,11 +269,11 @@ class JobTypeController extends Controller
      */
     public function restoreJobType(Request $request)
     {
-        $validation = Validator::make($request->all(), ['JobType_id' => 'required|exists:Job_Types,id']);
+        $validation = Validator::make($request->all(), ['jobType_id' => 'required|exists:job_types,id']);
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        $JobType = JobType::withTrashed()->find($request->JobType_id);
+        $JobType = JobType::withTrashed()->find($request->jobType_id);
         if (!is_null($JobType->deleted_at)) {
             $JobType->restore();
             return $this->ApiResponse(200,'JobType restored successfully');

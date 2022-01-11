@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\Validator;
+use function PHPUnit\Framework\isNull;
 
 class EducationController extends Controller
 {
@@ -150,14 +151,22 @@ class EducationController extends Controller
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
         $user = auth('sanctum')->user();
-        Education::where('id' , $request->education_id)->update([
-            'id'            => $request->education_id,
-            'user_id'       => $user->id,
-            'start_date'    => $request->start_date,
-            'end_date'      => $request->end_date,
-            'university'    => $request->university
-        ]);
-        return $this->ApiResponse(200, 'Education updated successfully');
+//        dd($user);
+//        $userEducation = Education::where('id' , $request->education_id);
+        $userEducation = Education::find($request->education_id);
+//        dd($userEducation->id);
+//        dd($userEducation->deleted_at);
+        if(isNull($userEducation->deleted_at)){
+            $userEducation->update([
+                'id'            => $request->education_id,
+                'user_id'       => $user->id,
+                'start_date'    => $request->start_date,
+                'end_date'      => $request->end_date,
+                'university'    => $request->university
+            ]);
+            return $this->ApiResponse(200, 'Education updated successfully', null, $userEducation);
+        }
+        return $this->ApiResponse(200, 'Invalid Education id');
     }
 
 
