@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="E-commerce Documentation",
+ *      title="Job-Search Documentation",
  * )
  */
 class BaseController extends Controller

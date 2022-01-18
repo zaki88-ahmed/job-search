@@ -14,9 +14,9 @@ class SkillController extends Controller
     public function __construct()
     {
         $this->middleware(['permissions:users-read'])->only(['getAllSkills']);
-        $this->middleware(['permissions:admins-create'])->only('createSkill');
-        $this->middleware(['permissions:admins-update'])->only('updateSkill');
-        $this->middleware(['permissions:admins-delete'])->only('deleteSkill');
+        $this->middleware(['permissions:users-create'])->only('createSkill');
+        $this->middleware(['permissions:users-update'])->only('updateSkill');
+        $this->middleware(['permissions:users-delete'])->only('deleteSkill');
     }
     /**
      * @OA\Get(
@@ -91,11 +91,23 @@ class SkillController extends Controller
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        Skill::create([
+        $user = auth('sanctum')->user();
+//        dd($user->id);
+        $skill = Skill::create([
             'name'                  => $request->name,
             'years_of_experience'   => $request->years_of_experience,
             'justification'         => $request->justification
         ]);
+//        dd($skill->id);
+        $data = [
+            'skill_id'  => $skill->id,
+        ];
+//        dd($data);
+
+//        dd($user);
+//        $skill->users()->sync($user);
+        $user->skills()->attach($user->id, $data);
+//        dd($user->skills());
         return $this->ApiResponse(200,'skill created successfully');
     }
 
@@ -146,17 +158,32 @@ class SkillController extends Controller
         if ($validator->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validator->errors());
         }
+        $user = auth('sanctum')->user();
         $skill = Skill::where('id', $request->skill_id)->first();
         if (is_null($skill)) {
-            return $this->ApiResponse(400, 'Skill already deleted');
+            return $this->ApiResponse(400, 'Skill not exist');
         }
 
-        $skill->update([
-            'name'                  => $request->name,
-            'years_of_experience'   => $request->years_of_experience,
-            'justification'         => $request->justification
-        ]);
-        return $this->apiResponse(200,'skill updated successfully');
+        $pivotRow = $user->skills()->where('skill_id', $skill->id)->first();
+//        dd($user->id);
+//        dd($skill->id);
+//        dd($pivotRow);
+
+        if($pivotRow){
+            $skill->update([
+                'name'                  => $request->name,
+                'years_of_experience'   => $request->years_of_experience,
+                'justification'         => $request->justification
+            ]);
+            $data = [
+                'skill_id'  => $skill->id,
+            ];
+            $user->skills()->sync($data);
+            return $this->apiResponse(200,'skill updated successfully');
+
+        }
+
+        return $this->apiResponse(200,'User do not have skill');
     }
 
     /**

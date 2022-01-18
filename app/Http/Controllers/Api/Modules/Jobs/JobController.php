@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Modules\Categories\Category;
 use App\Http\Controllers\Api\Modules\Locations\Location;
 use App\Http\Controllers\Api\Modules\Users\User;
 use App\Http\Controllers\Controller;
+use App\Http\Filter\FilterHelper;
 use App\Http\Requests\JobRequest;
 use App\Http\Resources\JobAppliedResource;
 use App\Http\Resources\JobResource;
@@ -95,17 +96,21 @@ class JobController extends Controller
      *      )
      *  )
      */
-    public function filterJobs()
+    public function filterJobs(Request $request)
     {
-        $jobLocations = Location::where('city', 'like', "%".request('city')."%")->first();
-        $jobCategories = Category::where('name', 'like', "%".request('category')."%")->first();
-
+//        $jobLocations = Location::where('city', 'like', "%".request('city')."%")->get();
+//        $jobCategories = Category::where('name', 'like', "%".request('category')."%")->first();
+//
 //        dd($jobLocations);
-//        dd($jobCategories->id);
-
-        $jobs = Job::where('category_id', $jobCategories ? $jobCategories->id : NULL)
-            ->Where('location_id', $jobLocations ? $jobLocations->id : NULL)->paginate(10);
+////        dd($jobCategories->id);
+//
+//        $jobs = Job::where('category_id', $jobCategories ? $jobCategories->id : NULL)
+//            ->Where('location_id', $jobLocations ? $jobLocations->id : NULL)->paginate(10);
 //        dd($jobs);
+
+        $filter_conditions = $request->only(['keyword', 'category_ids', 'store_ids']);
+        $query = FilterHelper::apply(Job::query(), $filter_conditions);
+        $jobs = $query->get();
         return $this->apiResponse(200,'Filtered Jobs',null, $jobs);
     }
 
@@ -168,7 +173,7 @@ class JobController extends Controller
      *              @OA\Property(property="salary_range", type="string", format="salary_range", example="1000 L.E - 2000 L.E"),
      *              @OA\Property(property="requirements", type="string", format="requirements", example="job requirements"),
      *              @OA\Property(property="description", type="string", format="description", example="job description"),
-     *              @OA\Property(property="years_of_experience", type="string", format="years_of_experience", example="2"),
+     *              @OA\Property(property="years_of_experience", type="string", format="years_of_experience", example="less than 1 year"),
      *              @OA\Property(property="category_id", type="integer", format="category_id", example="1"),
      *              @OA\Property(property="company_id", type="integer", format="company_id", example="1"),
      *              @OA\Property(property="location_id", type="integer", format="location_id", example="1"),
@@ -226,7 +231,7 @@ class JobController extends Controller
      *              @OA\Property(property="salary_range", type="string", format="salary_range", example="1000 L.E - 2000 L.E"),
      *              @OA\Property(property="requirements", type="string", format="requirements", example="job requirements"),
      *              @OA\Property(property="description", type="string", format="description", example="job description"),
-     *              @OA\Property(property="years_of_experience", type="integer", format="years_of_experience", example="2"),
+     *              @OA\Property(property="years_of_experience", type="integer", format="years_of_experience", example="less than 1 year"),
      *              @OA\Property(property="category_id", type="integer", format="category_id", example="1"),
      *              @OA\Property(property="company_id", type="integer", format="company_id", example="1"),
      *              @OA\Property(property="location_id", type="integer", format="location_id", example="1"),

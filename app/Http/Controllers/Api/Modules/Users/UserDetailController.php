@@ -16,8 +16,8 @@ class UserDetailController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permissions:users-read'])->only('getUserDetails');
-        $this->middleware(['permissions:users-create,users-update'])->only('updateOrCreateUserDetails');
+//        $this->middleware(['permissions:users-read'])->only('getUserDetails');
+//        $this->middleware(['permissions:users-create,users-update'])->only('updateOrCreateUserDetails');
     }
     /**
      * @OA\Get(
@@ -43,9 +43,10 @@ class UserDetailController extends Controller
      */
     public function getUserDetails() {
         $user = auth('sanctum')->user();
-        $userDetails = UserDetail::where('user_id' , $user->id)->get();
+        $userDetails = UserDetail::where('user_id' , $user->id)->first();
 
         return $this->apiResponse(200, 'user details', null, $userDetails);
+
     }
 
     /**
@@ -53,8 +54,8 @@ class UserDetailController extends Controller
      *      path="/api/users/details/create-or-update",
      *      operationId="create or update detail",
      *      tags={"User Details"},
-     *      summary="Create Or Update your details",
-     *      description="Add your User details",
+     *      summary="Create Or Update your User details",
+     *      description="Add Or Edit your User details",
      *      security={ {"sanctum": {} }},
      *      @OA\RequestBody(
      *         @OA\MediaType(
@@ -63,12 +64,12 @@ class UserDetailController extends Controller
      *                 allOf={
      *                     @OA\Schema(ref="#components/schemas/item"),
      *                     @OA\Schema(
-     *                     required={"gender", "marital_status", "millitary_status", "nationality"},
+     *                     required={"gender", "marital_status", "military_status", "nationality"},
      *                     @OA\Property(property="gender", type="string", format="gender", example="male"),
      *                     @OA\Property(property="nationality", type="string", format="nationality", example="egyption"),
      *                     @OA\Property(property="marital_status", type="string", format="marital_status", example="single"),
      *                     @OA\Property(property="military_status", type="string", format="military_status", example="exemption"),
-     *                     @OA\Property(description="resume",property="resume",type="string", format="binary")
+     *                     @OA\Property(description="logo",property="logo",type="string", format="binary")
      *                  )
      *                 }
      *               )
@@ -88,7 +89,7 @@ class UserDetailController extends Controller
      *      ),
      *        @OA\Response(
      *          response=400,
-     *          description="Validation Error"
+     *          description="Validation Errors"
      *      )
      *     )
      */
@@ -108,20 +109,29 @@ class UserDetailController extends Controller
 //        dd($request->all());
         $user = auth('sanctum')->user();
 //        dd($user->id);
-        $userExists = UserDetail::where('user_id', $user->id)->first();
+        $userExists = UserDetail::all();
+//        dd($userExists);
+        $userExists = $userExists->where('user_id', $user->id)->first();
 //        dd($userExists->id);
+//        dd($userExists);
+//        dd($userExists->resume);
+//        dd($userExists->marital_status);
         if ($request->hasFile('resume')) {
 //            dd($userExists->id);
+//            dd($userExists->resume);
             if ($userExists) {
 //                dd($userExists->id);
 //                Storage::disk('uploads')->delete('resumes/' . $userExists->resume);
 //                Storage::disk('uploads')->delete('logos/' . $companyExists->logo);
 //                dd($userExists->id);
 //                dd('cc');
+//                dd($userExists->id);
+                dd($userExists->resume);
                 $this->deleteResume('resumes/' . $userExists->resume);
                 $this->uploadResume($request, 'resumes');
+                dd($userExists->id);
             }
-//            dd($userExists->id);
+            dd($userExists->id);
 //            $file = $request->file('resume');
 //            $filename = time() . '.' . $request->file('resume')->extension();
 //            $filePath = public_path() . '/uploads/resumes/';
@@ -138,9 +148,10 @@ class UserDetailController extends Controller
                 $request->resume = $userExists->resume;
             }
         }
-
+//        dd($userExists);
         if ($userExists) {
 //            dd('cc');
+//            dd($userExists);
             $userExists->update([
                 'user_id'     => $user->id,
                 'gender'           => $request->gender,
@@ -153,8 +164,9 @@ class UserDetailController extends Controller
 //            return ($userExists);
 //            return  response()->json($userExists);
 //            dd($user->id);
-            $user = User::where('id', $user->id)->with('userDetail')->first();
-            dd($user->id);
+            $user = User::all();
+            $user = $user->where('id', $user->id)->with('userDetail')->first();
+//            return response()->json($user);
             return $this->ApiResponse(200,'your details updated successfully', null, $user);
         }else {
 //            dd('dd');
@@ -170,7 +182,7 @@ class UserDetailController extends Controller
 //            dd($userExists);
 //            return  response()->json($userExists);
             $user = User::where('id', $user->id)->with('userDetail')->first();
-            dd($user->id);
+//            dd($user->id);
             return $this->ApiResponse(200,'your details added successfully', null, $user);
         }
 

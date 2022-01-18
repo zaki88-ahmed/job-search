@@ -95,7 +95,7 @@ class LocationController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/location/show",
+     *      path="/api/locations/show",
      *      operationId="show specific location",
      *      tags={"Locations"},
      *      summary="show specific location",
@@ -126,11 +126,15 @@ class LocationController extends Controller
      */
     public function getLocationById(Request $request)
     {
+//        dd('dd');
         $validation = Validator::make($request->all(), ['location_id' => 'required|exists:locations,id']);
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        $location = Location::where('id', $request->location_id)->first();
+//        dd('ss');
+//        $location = Location::where('id', $request->location_id)->first();
+        $location = Location::find($request->location_id);
+//        dd($location);
         return $this->ApiResponse(200, 'Location details', null, LocationResource::make($location));
     }
     /**

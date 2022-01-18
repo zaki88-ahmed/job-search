@@ -18,7 +18,7 @@ class CompanyController extends Controller
     public function __construct()
     {
         $this->middleware(['permissions:companies-create'])->only('createCompany');
-//        $this->middleware(['permissions:companies-update'])->only('updateCompany');
+        $this->middleware(['permissions:companies-update'])->only('updateCompany');
         $this->middleware(['permissions:companies-delete'])->only(['softDeleteCompany', 'restoreDeleteCompany']);
     }
     /**
@@ -109,7 +109,8 @@ class CompanyController extends Controller
      *              required={"name", "email", "password"},
      *              @OA\Property(property="name", type="string", format="name", example="comapny"),
      *              @OA\Property(property="email", type="string", format="email", example="comapny@gmail.com"),
-     *              @OA\Property(property="password", type="string", format="password", example="12345678")
+     *              @OA\Property(property="password", type="string", format="password", example="123456"),
+     *              @OA\Property(property="password_confirmation", type="string", format="password", example="123456")
      *          ),
      *      ),
      *      @OA\Response(
@@ -135,8 +136,8 @@ class CompanyController extends Controller
         $validator = Validator::make($request->all() , [
             "name"                  => "required",
             "email"                 => "required|unique:users,email",
-            'password'              => 'required|min:8|confirmed',
-            'password_confirmation' => 'required|min:8'
+            'password'              => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6'
         ]);
         if($validator->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validator->errors());
@@ -168,9 +169,9 @@ class CompanyController extends Controller
      *          description="Pass company credentials",
      *          @OA\JsonContent(
      *              required={"name", "email", "password"},
+     *              @OA\Property(property="company_id", type="integer", format="company_id", example="1"),
      *              @OA\Property(property="name", type="string", format="name", example="comapny"),
      *              @OA\Property(property="email", type="string", format="email", example="comapny@gmail.com"),
-     *              @OA\Property(property="password", type="string", format="password", example="12345678")
      *          ),
      *      ),
      *      @OA\Response(
@@ -270,8 +271,8 @@ class CompanyController extends Controller
      *          required=true,
      *          description="Pass comapny credentials",
      *          @OA\JsonContent(
-     *              required={"comapny_id"},
-     *              @OA\Property(property="comapny_id", type="integer", format="comapny_id", example="2"),
+     *              required={"company_id"},
+     *              @OA\Property(property="company_id", type="integer", format="company_id", example="2"),
      *          ),
      *      ),
      *      @OA\Response(

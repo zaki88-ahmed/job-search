@@ -77,12 +77,12 @@ class CompanyDetailController extends Controller
      *                 allOf={
      *                     @OA\Schema(ref="#components/schemas/item"),
      *                     @OA\Schema(
-     *                     required={"gender", "marital_status", "millitary_status", "nationality"},
-     *                     @OA\Property(property="gender", type="string", format="gender", example="male"),
-     *                     @OA\Property(property="nationality", type="string", format="nationality", example="egyption"),
-     *                     @OA\Property(property="marital_status", type="string", format="marital_status", example="single"),
-     *                     @OA\Property(property="military_status", type="string", format="military_status", example="exemption"),
-     *                     @OA\Property(description="resume",property="resume",type="string", format="binary")
+     *                     required={"site", "size", "job_numbers", "description"},
+     *                     @OA\Property(property="site", type="string", format="site", example="new_site"),
+     *                     @OA\Property(property="size", type="integer", format="size", example="11"),
+     *                     @OA\Property(property="job_numbers", type="integer", format="job_numbers", example="3"),
+     *                     @OA\Property(property="description", type="string", format="description", example="comp_description"),
+     *                     @OA\Property(description="logo",property="logo",type="string", format="binary")
      *                  )
      *                 }
      *               )

@@ -26,6 +26,7 @@ class MatchOldPassword implements Rule
      */
     public function passes($attribute, $value)
     {
+        dd('zz');
         return Hash::check($value, auth('sanctum')->user()->password);
     }
 

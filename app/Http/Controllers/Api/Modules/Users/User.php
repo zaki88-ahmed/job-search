@@ -68,6 +68,12 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'user_skill', 'skill_id', 'user_id')
+            ->withTimestamps();
+    }
+
     public function userDetail() {
         return $this->hasOne(UserDetail::class, 'user_id');
     }
@@ -80,9 +86,9 @@ class User extends Authenticatable
         return $this->hasMany(Education::class);
     }
 
-    public function skills() {
-        return $this->hasMany(Skill::class);
-    }
+//    public function skills() {
+//        return $this->hasMany(Skill::class);
+//    }
 
     public function companyDetail() {
         return $this->hasOne(CompanyDetail::class, 'company_id');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Modules\JobTypes;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\JobTypeResource;
 use Illuminate\Http\Request;
 use App\Http\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\Validator;
@@ -13,10 +14,10 @@ class JobTypeController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permissions:jobTypes-read'])->only(['getAllJobTypes', 'getJobTypeById']);
-        $this->middleware(['permissions:jobTypes-create'])->only('createJobType');
-        $this->middleware(['permissions:jobTypes-update'])->only('updateJobType');
-        $this->middleware(['permissions:jobTypes-delete'])->only(['softDeleteJobType', 'restoreJobType']);
+//        $this->middleware(['permissions:jobTypes-read'])->only(['getAllJobTypes', 'getJobTypeById']);
+//        $this->middleware(['permissions:jobTypes-create'])->only('createJobType');
+//        $this->middleware(['permissions:jobTypes-update'])->only('updateJobType');
+//        $this->middleware(['permissions:jobTypes-delete'])->only(['softDeleteJobType', 'restoreJobType']);
     }
 
      /**
@@ -42,8 +43,10 @@ class JobTypeController extends Controller
      */
     public function getAllJobTypes()
     {
-        $JobTypes = JobType::with('jobs')->get();
-        return $this->apiResponse(200,'All JobTypes',null, $JobTypes);
+//        $jobTypes = JobType::with('jobs')->get();
+        $jobTypes = JobType::get();
+//        return $this->apiResponse(200,'All JobTypes',null, $jobTypes);
+        return $this->apiResponse(200,'All JobTypes',null, JobTypeResource::collection($jobTypes));
     }
 
     /**
@@ -99,7 +102,7 @@ class JobTypeController extends Controller
      *      description="show specific JobType",
      *     security={ {"sanctum": {} }},
      *   @OA\Parameter(
-     *    name="JobType_id",
+     *    name="jobType_id",
      *    in="query",
      *    required=true,
      *    description="Enter JobType id",
@@ -124,12 +127,17 @@ class JobTypeController extends Controller
      */
     public function getJobTypeById(Request $request)
     {
-        $validation = Validator::make($request->all(), ['JobType_id' => 'required|exists:JobTypes,id']);
+//        dd('zz');
+        $validation = Validator::make($request->all(), ['jobType_id' => 'required|exists:job_types,id']);
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        $JobType = JobType::where('id', $request->JobType_id)->with('jobs')->first();
-        return $this->ApiResponse(200, 'JobType details', null, $JobType);
+//        dd('zz');
+//        $jobType = JobType::where('id', $request->jobType_id)->with('jobs')->first();
+//        $jobType = JobType::where('id', $request->jobType_id)->first();
+        $jobType = JobType::find($request->jobType_id);
+//        dd($jobType);
+        return $this->ApiResponse(200, 'JobType details', null, $jobType);
     }
     /**
      * @OA\Post(
@@ -194,8 +202,8 @@ class JobTypeController extends Controller
      *          required=true,
      *          description="Pass JobType data",
      *          @OA\JsonContent(
-     *              required={"JobType_id"},
-     *              @OA\Property(property="JobType_id", type="integer", format="JobType_id", example="1"),
+     *              required={"jobType_id"},
+     *              @OA\Property(property="jobType_id", type="integer", format="jobType_id", example="1"),
      *          ),
      *      ),
      *      @OA\Response(
@@ -222,14 +230,21 @@ class JobTypeController extends Controller
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-//        dd('dd');
-        $jobType = jobType::find($request->jobType_id);
+//        dd($request->jobType_id);
+//        $jobType = JobType::withTrashed()->find($request->jobType_id);
+//        $jobType = JobType::withTrashed()->find($request->jobType_id);
+//        dd('asd');
+
+//        $jobType = jobType::where('id', $request->jobType_id);
+//        $jobType = jobType::find(2);
+//        $jobTypes = JobType::all();
+        $jobType = JobType::find($request->jobType_id);
 //        dd('cc');
-        dd($jobType);
+//        dd($jobType);
         if (is_null($jobType)) {
             return $this->ApiResponse(400, 'JobType already deleted');
         }
-        $JobType->delete();
+        $jobType->delete();
         return $this->ApiResponse(200,'JobType deleted successfully');
     }
 
@@ -245,8 +260,8 @@ class JobTypeController extends Controller
      *          required=true,
      *          description="Pass JobType data",
      *          @OA\JsonContent(
-     *              required={"JobType_id"},
-     *              @OA\Property(property="JobType_id", type="integer", format="JobType_id", example="1"),
+     *              required={"jobType_id"},
+     *              @OA\Property(property="jobType_id", type="integer", format="jobType_id", example="1"),
      *          ),
      *      ),
      *      @OA\Response(

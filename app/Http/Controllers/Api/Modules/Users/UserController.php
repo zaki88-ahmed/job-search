@@ -22,7 +22,7 @@ class UserController extends BaseController
     {
         $this->middleware(['permissions:users-read'])->only(['getAllUsers', 'showUserById']);
         $this->middleware(['permissions:users-update'])->only('updateUser');
-        $this->middleware(['permissions:users-delete'])->only(['softDeleteUser', 'restoreDeleteUser']);
+        $this->middleware(['permissions:admins-delete'])->only(['softDeleteUser', 'restoreDeleteUser']);
     }
     /**
      * @OA\Post(
@@ -38,7 +38,7 @@ class UserController extends BaseController
      *       required={"name", "email","password"},
      *       @OA\Property(property="name", type="string", example="User"),
      *       @OA\Property(property="email", type="string", format="email", example="user@gmail.com"),
-     *       @OA\Property(property="password", type="string", format="password", example="12345678"),
+     *       @OA\Property(property="password", type="string", format="password", example="123456"),
      *    ),
      * ),
      * @OA\Response(
@@ -95,7 +95,7 @@ class UserController extends BaseController
      *    @OA\JsonContent(
      *       required={"email","password"},
      *       @OA\Property(property="email", type="string", format="email", example="user@mail.com"),
-     *       @OA\Property(property="password", type="string", format="password", example="12345678"),
+     *       @OA\Property(property="password", type="string", format="password", example="123456"),
      *       @OA\Property(property="persistent", type="boolean", example="true"),
      *    ),
      * ),
@@ -316,10 +316,11 @@ class UserController extends BaseController
      *          required=true,
      *          description="Pass user credentials",
      *          @OA\JsonContent(
-     *              required={"name", "email", "password"},
+     *              required={"name", "email", "password","user_id"},
+     *              @OA\Property(property="user_id", type="integer", format="user_id", example="1"),
      *              @OA\Property(property="name", type="string", format="name", example="user"),
      *              @OA\Property(property="email", type="string", format="email", example="user@gmail.com"),
-     *              @OA\Property(property="password", type="string", format="password", example="12345678")
+     *              @OA\Property(property="password", type="string", format="password", example="123456")
      *          ),
      *      ),
      *      @OA\Response(
@@ -403,6 +404,7 @@ class UserController extends BaseController
     public function softDeleteUser(Request $request)
     {
 //        dd('cc');
+
         $validation = Validator::make($request->all(), ['user_id' => 'required|exists:users,id']);
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());

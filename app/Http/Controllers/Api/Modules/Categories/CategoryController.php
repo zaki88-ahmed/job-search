@@ -15,10 +15,10 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permissions:categories-read'])->only(['getAllCategories', 'getCategoryById']);
-        $this->middleware(['permissions:categories-create'])->only('createCategory');
-        $this->middleware(['permissions:categories-update'])->only('updateCategory');
-        $this->middleware(['permissions:categories-delete'])->only(['softDeleteCategory', 'restoreCategory']);
+//        $this->middleware(['permissions:categories-read'])->only(['getAllCategories', 'getCategoryById']);
+//        $this->middleware(['permissions:categories-create'])->only('createCategory');
+//        $this->middleware(['permissions:categories-update'])->only('updateCategory');
+//        $this->middleware(['permissions:categories-delete'])->only(['softDeleteCategory', 'restoreCategory']);
     }
 
      /**
@@ -44,7 +44,10 @@ class CategoryController extends Controller
      */
     public function getAllCategories()
     {
-        $categories = category::get();
+//        dd('ss');
+//        $categories = Category::get();
+        $categories = Category::get();
+//        dd($categories);
         return $this->apiResponse(200,'All categories',null, CategoryResource::collection($categories));
     }
 
@@ -138,8 +141,13 @@ class CategoryController extends Controller
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        $category = Category::where('id', $request->category_id)->with(['parentCategory', 'jobs'])->first();
-        return $this->ApiResponse(200, 'Category details', null, CategoryResource::collection($category));
+//        dd('jj');
+        $category = Category::all();
+//        return $category;
+        $category = $category->where('id', $request->category_id)->first();
+//        $category = $category->where('id', $request->category_id)->with(['parentCategory', 'jobs'])->first();
+//        return $category;
+        return $this->ApiResponse(200, 'Category details', null, new CategoryResource($category));
     }
 
     /**
@@ -234,7 +242,8 @@ class CategoryController extends Controller
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
-        $category = category::find($request->category_id);
+//        $category = category::find($request->category_id);
+        $category = Category::find($request->category_id);
         if (is_null($category)) {
             return $this->ApiResponse(400, 'category already deleted');
         }
@@ -283,7 +292,7 @@ class CategoryController extends Controller
             return $this->ApiResponse(400, 'Validation Error', $validation->errors());
         }
 
-        $category = category::withTrashed()->find($request->category_id);
+        $category = Category::withTrashed()->find($request->category_id);
         if (!is_null($category->deleted_at)) {
             $category->restore();
             return $this->ApiResponse(200,'category restored successfully');

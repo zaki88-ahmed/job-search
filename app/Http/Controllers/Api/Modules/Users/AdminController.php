@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Modules\Users;
 
+use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Traits\ApiResponseTrait;
@@ -117,7 +118,8 @@ class AdminController extends BaseController
      *              required={"name", "email","password"},
      *              @OA\Property(property="name", type="string", example="Ahmed"),
      *              @OA\Property(property="email", type="email", example="test@gmail.com"),
-     *              @OA\Property(property="password", type="password", example="123@test"),
+     *              @OA\Property(property="password", type="password", example="123456"),
+     *              @OA\Property(property="password_confirmation", type="password", example="123456"),
      *          ),
      *      ),
      *      @OA\Response(
@@ -181,8 +183,8 @@ class AdminController extends BaseController
      *              @OA\Property(property="admin_id", type="integer", format="admin_id", example="1"),
      *              @OA\Property(property="name", type="string", format="name", example="Ahmed"),
      *              @OA\Property(property="email", type="email", format="email", example="test@gmail.com"),
-     *              @OA\Property(property="old_password", type="string", format="old_password", example="12345678"),
-     *              @OA\Property(property="new_password", type="string", format="new_password", example="12345678")
+     *              @OA\Property(property="old_password", type="string", format="old_password", example="123456"),
+     *              @OA\Property(property="new_password", type="string", format="new_password", example="123456")
      *          ),
      *      ),
      *      @OA\Response(
@@ -205,18 +207,26 @@ class AdminController extends BaseController
      */
     public function updateAdmin(Request $request)
     {
+//        dd($request->all());
         $validation = Validator::make($request->all(), [
             'admin_id' => 'required|exists:users,id',
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$request->admin_id
+            'email' => 'required|email|unique:users,email,'.$request->admin_id,
+            'old_password'        => 'required|min:6', new MatchOldPassword(),
+            'new_password'        => 'required|min:6',
         ]);
+//        dd($request->all());
         if ($validation->fails()) {
             return $this->ApiResponse(400, 'Validation Errors', $validation->errors());
         }
-
-        User::find($request->admin_id)->update([
+//        dd($request->all());
+        $admin = User::find($request->admin_id);
+//        dd($admin);
+            $admin->update([
             'name' => $request->name,
             'email' => $request->email,
+            'old_password' => $request->old_password,
+            'new_password' => $request->new_password,
         ]);
         return $this->ApiResponse(200, 'Admin updated successfully');
     }

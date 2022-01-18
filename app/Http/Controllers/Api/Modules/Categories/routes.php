@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Modules\Categories\CategoryController;
+use Illuminate\Support\Facades\Route;
+
 
 Route::middleware(['auth:sanctum', 'roles:super-admin'])->group(function () {
     Route::post('category/add', [CategoryController::class, 'createCategory']);

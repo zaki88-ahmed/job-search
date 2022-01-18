@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "E-commerce Documentation",
+        "title": "Job-Search Documentation",
         "version": "1.0.0"
     },
     "paths": {
@@ -355,7 +355,7 @@
                 "operationId": "show specific JobType",
                 "parameters": [
                     {
-                        "name": "JobType_id",
+                        "name": "jobType_id",
                         "in": "query",
                         "description": "Enter JobType id",
                         "required": true
@@ -453,12 +453,12 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "JobType_id"
+                                    "jobType_id"
                                 ],
                                 "properties": {
-                                    "JobType_id": {
+                                    "jobType_id": {
                                         "type": "integer",
-                                        "format": "JobType_id",
+                                        "format": "jobType_id",
                                         "example": "1"
                                     }
                                 },
@@ -503,12 +503,12 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "JobType_id"
+                                    "jobType_id"
                                 ],
                                 "properties": {
-                                    "JobType_id": {
+                                    "jobType_id": {
                                         "type": "integer",
-                                        "format": "JobType_id",
+                                        "format": "jobType_id",
                                         "example": "1"
                                     }
                                 },
@@ -683,7 +683,7 @@
                                     "years_of_experience": {
                                         "type": "string",
                                         "format": "years_of_experience",
-                                        "example": "2"
+                                        "example": "less than 1 year"
                                     },
                                     "category_id": {
                                         "type": "integer",
@@ -787,7 +787,7 @@
                                     "years_of_experience": {
                                         "type": "integer",
                                         "format": "years_of_experience",
-                                        "example": "2"
+                                        "example": "less than 1 year"
                                     },
                                     "category_id": {
                                         "type": "integer",
@@ -1215,7 +1215,7 @@
                 ]
             }
         },
-        "/api/location/show": {
+        "/api/locations/show": {
             "get": {
                 "tags": [
                     "Locations"
@@ -1244,12 +1244,7 @@
                     "400": {
                         "description": "Validation Error"
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             }
         },
         "/api/locations/update": {
@@ -2074,7 +2069,11 @@
                                     },
                                     "password": {
                                         "type": "password",
-                                        "example": "123@test"
+                                        "example": "123456"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "password",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -2142,12 +2141,12 @@
                                     "old_password": {
                                         "type": "string",
                                         "format": "old_password",
-                                        "example": "12345678"
+                                        "example": "123456"
                                     },
                                     "new_password": {
                                         "type": "string",
                                         "format": "new_password",
-                                        "example": "12345678"
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -2358,7 +2357,12 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "12345678"
+                                        "example": "123456"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -2407,6 +2411,11 @@
                                     "password"
                                 ],
                                 "properties": {
+                                    "company_id": {
+                                        "type": "integer",
+                                        "format": "company_id",
+                                        "example": "1"
+                                    },
                                     "name": {
                                         "type": "string",
                                         "format": "name",
@@ -2416,11 +2425,6 @@
                                         "type": "string",
                                         "format": "email",
                                         "example": "comapny@gmail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "12345678"
                                     }
                                 },
                                 "type": "object"
@@ -2514,12 +2518,12 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "comapny_id"
+                                    "company_id"
                                 ],
                                 "properties": {
-                                    "comapny_id": {
+                                    "company_id": {
                                         "type": "integer",
-                                        "format": "comapny_id",
+                                        "format": "company_id",
                                         "example": "2"
                                     }
                                 },
@@ -2599,34 +2603,34 @@
                                     },
                                     {
                                         "required": [
-                                            "gender",
-                                            "marital_status",
-                                            "millitary_status",
-                                            "nationality"
+                                            "site",
+                                            "size",
+                                            "job_numbers",
+                                            "description"
                                         ],
                                         "properties": {
-                                            "gender": {
+                                            "site": {
                                                 "type": "string",
-                                                "format": "gender",
-                                                "example": "male"
+                                                "format": "site",
+                                                "example": "new_site"
                                             },
-                                            "nationality": {
+                                            "size": {
+                                                "type": "integer",
+                                                "format": "size",
+                                                "example": "11"
+                                            },
+                                            "job_numbers": {
+                                                "type": "integer",
+                                                "format": "job_numbers",
+                                                "example": "3"
+                                            },
+                                            "description": {
                                                 "type": "string",
-                                                "format": "nationality",
-                                                "example": "egyption"
+                                                "format": "description",
+                                                "example": "comp_description"
                                             },
-                                            "marital_status": {
-                                                "type": "string",
-                                                "format": "marital_status",
-                                                "example": "single"
-                                            },
-                                            "military_status": {
-                                                "type": "string",
-                                                "format": "military_status",
-                                                "example": "exemption"
-                                            },
-                                            "resume": {
-                                                "description": "resume",
+                                            "logo": {
+                                                "description": "logo",
                                                 "type": "string",
                                                 "format": "binary"
                                             }
@@ -3333,7 +3337,7 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "12345678"
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -3403,7 +3407,7 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "12345678"
+                                        "example": "123456"
                                     },
                                     "persistent": {
                                         "type": "boolean",
@@ -3634,9 +3638,15 @@
                                 "required": [
                                     "name",
                                     "email",
-                                    "password"
+                                    "password",
+                                    "user_id"
                                 ],
                                 "properties": {
+                                    "user_id": {
+                                        "type": "integer",
+                                        "format": "user_id",
+                                        "example": "1"
+                                    },
                                     "name": {
                                         "type": "string",
                                         "format": "name",
@@ -3650,7 +3660,7 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "12345678"
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -3810,8 +3820,8 @@
                 "tags": [
                     "User Details"
                 ],
-                "summary": "Create Or Update your details",
-                "description": "Add your User details",
+                "summary": "Create Or Update your User details",
+                "description": "Add Or Edit your User details",
                 "operationId": "create or update detail",
                 "requestBody": {
                     "content": {
@@ -3825,7 +3835,7 @@
                                         "required": [
                                             "gender",
                                             "marital_status",
-                                            "millitary_status",
+                                            "military_status",
                                             "nationality"
                                         ],
                                         "properties": {
@@ -3849,8 +3859,8 @@
                                                 "format": "military_status",
                                                 "example": "exemption"
                                             },
-                                            "resume": {
-                                                "description": "resume",
+                                            "logo": {
+                                                "description": "logo",
                                                 "type": "string",
                                                 "format": "binary"
                                             }
@@ -3873,7 +3883,7 @@
                         "description": "Forbidden"
                     },
                     "400": {
-                        "description": "Validation Error"
+                        "description": "Validation Errors"
                     }
                 },
                 "security": [
